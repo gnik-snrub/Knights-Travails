@@ -42,4 +42,46 @@ const graph = () => {
   }
 
   buildGraph()
+
+  const knightMoves = (start, end) => {
+    const outOfBounds = []
+    if (start[0] < 0 || start[0] > 7 ||
+        start[1] < 0 || start[1] > 7 ) outOfBounds.push('start')
+    if (end[0] < 0 || end[0] > 7 ||
+        end[1] < 0 || end[1] > 7) outOfBounds.push('end')
+    if (outOfBounds.length) return outOfBounds.join(' and ') + ' is invalid'
+
+    if (start[0] === end[0] && start[1] === end[1]) return [start]
+
+    const startVertex = findVertex(start[0], start[1])
+    const queue = [startVertex]
+    const startCoords = start.toString()
+    const map = {}
+    map[startCoords] = startCoords
+
+    while (queue.length) {
+      const search = queue.shift()
+      search.adjacents.forEach((item) => {
+        const itemCoords = item.toString()
+        if (!map[itemCoords]) {
+          queue.push(findVertex(item[0], item[1]))
+          map[itemCoords] = search.value
+        }
+      })
+    }
+
+    const reverseTrail = [end]
+    let step = map[end]
+    while (step[0] !== start[0] || step[1] !== start[1]) {
+      reverseTrail.push(step)
+      step = map[step]
+    }
+
+    reverseTrail.push(step)
+    return reverseTrail.reverse()
+  }
+
+  return {
+    knightMoves
+  }
 }
