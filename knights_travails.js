@@ -85,3 +85,15 @@ const graph = () => {
     knightMoves
   }
 }
+
+const demo = () => {
+  const demo = graph()
+  console.log('Corner to corner: ', demo.knightMoves([0, 0], [7, 7]))
+  console.log('Start = End: ', demo.knightMoves([3, 3], [3, 3]))
+  console.log('Bonus test: ', demo.knightMoves([0, 0], [3, 3]))
+  console.log('Invalid start input: ', demo.knightMoves([-1, 0], [7, 7]))
+  console.log('Invalid end input: ', demo.knightMoves([0, 0], [8, 7]))
+  console.log('Invalid start and end inputs: ', demo.knightMoves([-1, 0], [8, 7]))
+}
+
+demo()
